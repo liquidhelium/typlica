@@ -7,21 +7,16 @@ Typst 交互式练习平台 —— 将类似 [Rustlings](https://github.com/rust
 - **纯前端**：可部署在任何静态页面托管服务（如 GitHub Pages）
 - **浏览器内编译**：使用 [typst.ts](https://github.com/Myriad-Dreamin/typst.ts) 在浏览器中编译 Typst 代码
 - **实时预览**：编辑代码后即时预览结果
-- **对比检查**：使用 pixelmatch 进行像素级差异对比
+- **对比检查**：内置像素级差异对比，高亮显示与参考答案的差异
 - **语法高亮 & 补全**：基于 CodeMirror 6 的 Typst 语法高亮和关键字补全
 - **进度保存**：自动保存代码和完成状态到 localStorage
+- **移动端适配**：编辑器始终可见，预览区通过 Tab 切换当前/预期/差异视图
 
 ## 本地开发
 
 ```bash
 npm install
 npm run dev
-```
-
-### 生成参考图片（需要安装 [typst CLI](https://github.com/typst/typst)）
-
-```bash
-npm run generate-refs
 ```
 
 ## 构建
@@ -37,7 +32,6 @@ npm run build
 1. 在 `exercises/` 下创建新目录，如 `exercises/06-tables/`
 2. 添加 `answer.typ` 文件（答案代码）
 3. 在 `src/exercises.ts` 中添加练习元数据
-4. 运行 `npm run generate-refs` 更新参考图片
 
 ## 项目结构
 
@@ -69,7 +63,6 @@ typlica/
 - [Vite](https://vitejs.dev/) — 构建工具
 - [typst.ts](https://github.com/Myriad-Dreamin/typst.ts) — 浏览器端 Typst 编译器
 - [CodeMirror 6](https://codemirror.net/) — 代码编辑器（支持移动端）
-- [pixelmatch](https://github.com/mapbox/pixelmatch) — 像素级图像对比
 
 ## 许可
 
