@@ -18,10 +18,10 @@ let compilerReady = false;
 function renderApp(): void {
   const app = document.getElementById('app')!;
   app.innerHTML = `
-    <div class="loading-overlay" id="loading">
+    ${compilerReady ? '' : `<div class="loading-overlay" id="loading">
       <div class="loading-spinner"></div>
       <div class="loading-text">${t('loading')}</div>
-    </div>
+    </div>`}
 
     <header class="header">
       <div class="header-title">Typlica</div>
