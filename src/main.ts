@@ -1,5 +1,5 @@
 import './style.css';
-import { initCompiler, compile } from './compiler';
+import { initCompiler, renderToCanvas } from './compiler';
 import { exercises, Exercise, getSavedCode, saveCode, markCompleted, isCompleted, getCompletedCount } from './exercises';
 import { createEditor, setEditorContent } from './editor';
 import { computeDiff } from './diff';
@@ -8,7 +8,7 @@ import type { EditorView } from '@codemirror/view';
 let currentExercise: Exercise = exercises[0];
 let editorView: EditorView | null = null;
 let compileTimeout: ReturnType<typeof setTimeout> | null = null;
-let expectedSvgCache: Map<string, string> = new Map();
+let expectedCanvasCache: Map<string, HTMLCanvasElement> = new Map();
 let hintVisible = false;
 let compilerReady = false;
 
@@ -159,13 +159,11 @@ function debouncedCompile(code: string): void {
 async function compileUserCode(code: string): Promise<void> {
   if (!compilerReady) return;
 
-  const result = await compile(code);
   const container = document.getElementById('current-content')!;
+  const result = await renderToCanvas(container, code);
 
   if (result.error) {
     container.innerHTML = `<div class="preview-error">${escapeHtml(result.error)}</div>`;
-  } else {
-    container.innerHTML = result.svg!;
   }
 }
 
@@ -174,19 +172,20 @@ async function compileExpected(): Promise<void> {
 
   const container = document.getElementById('expected-content')!;
 
-  if (expectedSvgCache.has(currentExercise.id)) {
-    container.innerHTML = expectedSvgCache.get(currentExercise.id)!;
+  if (expectedCanvasCache.has(currentExercise.id)) {
+    container.innerHTML = '';
+    const cached = expectedCanvasCache.get(currentExercise.id)!;
+    container.appendChild(cached);
     return;
   }
 
   container.innerHTML = '<div class="preview-placeholder">编译预期结果中...</div>';
 
-  const result = await compile(currentExercise.answerCode);
+  const result = await renderToCanvas(container, currentExercise.answerCode);
   if (result.error) {
     container.innerHTML = `<div class="preview-error">答案编译失败: ${escapeHtml(result.error)}</div>`;
-  } else {
-    expectedSvgCache.set(currentExercise.id, result.svg!);
-    container.innerHTML = result.svg!;
+  } else if (result.canvas) {
+    expectedCanvasCache.set(currentExercise.id, result.canvas);
   }
 }
 
@@ -194,18 +193,32 @@ async function checkAnswer(): Promise<void> {
   if (!compilerReady) return;
 
   const code = editorView!.state.doc.toString();
-  const [currentResult, expectedResult] = await Promise.all([
-    compile(code),
-    getExpectedSvg(),
-  ]);
 
-  if (currentResult.error || !expectedResult) {
+  // Ensure both panels are rendered
+  const currentContainer = document.getElementById('current-content')!;
+  const currentResult = await renderToCanvas(currentContainer, code);
+
+  if (currentResult.error) {
+    currentContainer.innerHTML = `<div class="preview-error">${escapeHtml(currentResult.error)}</div>`;
     updateMatchStatus(0);
     return;
   }
 
+  // Get expected canvas (from cache or render fresh)
+  let expectedCanvas = expectedCanvasCache.get(currentExercise.id);
+  if (!expectedCanvas) {
+    const tempDiv = document.createElement('div');
+    const expResult = await renderToCanvas(tempDiv, currentExercise.answerCode);
+    if (expResult.error || !expResult.canvas) {
+      updateMatchStatus(0);
+      return;
+    }
+    expectedCanvas = expResult.canvas;
+    expectedCanvasCache.set(currentExercise.id, expectedCanvas);
+  }
+
   try {
-    const diff = await computeDiff(currentResult.svg!, expectedResult);
+    const diff = computeDiff(currentResult.canvas!, expectedCanvas);
     const diffContainer = document.getElementById('diff-content')!;
 
     if (diff.type === 'size-mismatch') {
@@ -241,16 +254,7 @@ async function checkAnswer(): Promise<void> {
   }
 }
 
-async function getExpectedSvg(): Promise<string | null> {
-  if (expectedSvgCache.has(currentExercise.id)) {
-    return expectedSvgCache.get(currentExercise.id)!;
-  }
-  const result = await compile(currentExercise.answerCode);
-  if (result.svg) {
-    expectedSvgCache.set(currentExercise.id, result.svg);
-  }
-  return result.svg;
-}
+
 
 function updateMatchStatus(percentage: number): void {
   const statusEl = document.getElementById('match-status')! as HTMLElement;

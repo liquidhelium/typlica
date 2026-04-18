@@ -1,6 +1,6 @@
 import { EditorView, keymap } from '@codemirror/view';
 import { EditorState } from '@codemirror/state';
-import { defaultKeymap, indentWithTab } from '@codemirror/commands';
+import { defaultKeymap, historyKeymap, indentWithTab, history } from '@codemirror/commands';
 import { autocompletion, acceptCompletion, CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import { typstLanguage } from './typst-lang';
 
@@ -59,10 +59,12 @@ export function createEditor(
     state: EditorState.create({
       doc: initialCode,
       extensions: [
+        history(),
         keymap.of([
-          ...defaultKeymap,
-          indentWithTab,
           { key: 'Tab', run: acceptCompletion },
+          indentWithTab,
+          ...historyKeymap,
+          ...defaultKeymap,
         ]),
         typstLanguage,
         autocompletion({

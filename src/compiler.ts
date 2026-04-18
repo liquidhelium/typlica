@@ -27,17 +27,26 @@ export async function initCompiler(): Promise<void> {
   $typst.setCompilerInitOptions({ getModule: () => COMPILER_WASM });
   $typst.setRendererInitOptions({ getModule: () => RENDERER_WASM });
 
-  // Warm up the compiler
-  await $typst.svg({ mainContent: '' });
+  // Warm up the compiler with a canvas render
+  const tmp = document.createElement('div');
+  await $typst.canvas(tmp, { mainContent: '' });
   initialized = true;
 }
 
-export async function compile(code: string): Promise<{ svg: string; error: null } | { svg: null; error: string }> {
+export async function renderToCanvas(
+  container: HTMLElement,
+  code: string,
+): Promise<{ canvas: HTMLCanvasElement; error: null } | { canvas: null; error: string }> {
   try {
-    const svg = await $typst.svg({ mainContent: PREAMBLE + code });
-    return { svg, error: null };
+    container.innerHTML = '';
+    await $typst.canvas(container, { mainContent: PREAMBLE + code });
+    const canvas = container.querySelector('canvas') as HTMLCanvasElement | null;
+    if (!canvas) {
+      return { canvas: null, error: 'Canvas rendering produced no output' };
+    }
+    return { canvas, error: null };
   } catch (e) {
-    return { svg: null, error: e instanceof Error ? e.message : String(e) };
+    return { canvas: null, error: e instanceof Error ? e.message : String(e) };
   }
 }
 

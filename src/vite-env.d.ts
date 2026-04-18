@@ -5,10 +5,13 @@ declare module '*.typ?raw' {
   export default content;
 }
 
-interface TypstCompiler {
+interface TypstSnippet {
   setCompilerInitOptions(opts: { getModule: () => string }): void;
   setRendererInitOptions(opts: { getModule: () => string }): void;
   svg(opts: { mainContent: string }): Promise<string>;
+  canvas(container: HTMLElement, opts: { mainContent: string }): Promise<void>;
+  pdf(opts: { mainContent: string }): Promise<Uint8Array>;
+  vector(opts: { mainContent: string }): Promise<Uint8Array>;
 }
 
-declare var $typst: TypstCompiler;
+declare var $typst: TypstSnippet;
