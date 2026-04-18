@@ -261,22 +261,25 @@ body {
 
 .preview-content {
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
   background: var(--preview-bg);
   padding: 8px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+  min-height: 0;
 }
 
 .preview-content svg {
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .preview-content canvas {
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .preview-error {

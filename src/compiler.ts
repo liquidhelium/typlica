@@ -29,7 +29,7 @@ export async function initCompiler(): Promise<void> {
 
   // Warm up the compiler with a canvas render
   const tmp = document.createElement('div');
-  await $typst.canvas(tmp, { mainContent: '' });
+  await $typst.canvas(tmp, { mainContent: '', pixelPerPt: 3 });
   initialized = true;
 }
 
@@ -38,12 +38,23 @@ export async function renderToCanvas(
   code: string,
 ): Promise<{ canvas: HTMLCanvasElement; error: null } | { canvas: null; error: string }> {
   try {
-    container.innerHTML = '';
-    await $typst.canvas(container, { mainContent: PREAMBLE + code });
-    const canvas = container.querySelector('canvas') as HTMLCanvasElement | null;
-    if (!canvas) {
+    // Render into an offscreen temp container to avoid typst.ts injecting
+    // semantic text overlays and inline styles into our visible DOM
+    const tmp = document.createElement('div');
+    await $typst.canvas(tmp, { mainContent: PREAMBLE + code, pixelPerPt: 3 });
+    const srcCanvas = tmp.querySelector('canvas') as HTMLCanvasElement | null;
+    if (!srcCanvas) {
       return { canvas: null, error: 'Canvas rendering produced no output' };
     }
+    // Copy pixel data to a clean canvas so we don't carry typst.ts wrapper DOM
+    const canvas = document.createElement('canvas');
+    canvas.width = srcCanvas.width;
+    canvas.height = srcCanvas.height;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(srcCanvas, 0, 0);
+
+    container.innerHTML = '';
+    container.appendChild(canvas);
     return { canvas, error: null };
   } catch (e) {
     return { canvas: null, error: e instanceof Error ? e.message : String(e) };
