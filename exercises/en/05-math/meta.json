@@ -1,0 +1,6 @@
+{
+  "title": "Math Equations",
+  "description": "Write mathematical equations",
+  "instructions": "Write the following math:\n\n1. Inline equation: write \"The equation \" followed by inline math a² + b² = c²\n2. On a new line, write a standalone block equation: the quadratic formula\n   x = (-b ± √(b² - 4ac)) / 2a",
+  "hint": "Inline math: $a^2 + b^2 = c^2$. Block equations need surrounding spaces. Use ^ for superscript, / for fractions, sqrt() for square root."
+}

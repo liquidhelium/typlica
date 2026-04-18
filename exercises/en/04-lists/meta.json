@@ -1,0 +1,6 @@
+{
+  "title": "Lists",
+  "description": "Create ordered and unordered lists",
+  "instructions": "Create the following list structure:\n\nAn unordered list containing:\n- Apples\n- Bananas\n- Cherries\n\nThen an ordered list containing:\n1. First\n2. Second\n3. Third",
+  "hint": "Unordered lists start with -, ordered lists start with +. Each item must be on its own line."
+}

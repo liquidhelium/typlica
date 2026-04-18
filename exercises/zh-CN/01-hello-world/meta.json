@@ -1,0 +1,6 @@
+{
+  "title": "你好，世界！",
+  "description": "编写你的第一个 Typst 文档",
+  "instructions": "编写 Typst 代码，使输出内容为加粗的 \"Hello, World!\" 文本。\n\n提示：在 Typst 中，使用 `*文本*` 来加粗文字。",
+  "hint": "直接输入 *Hello, World!* 试试看？"
+}

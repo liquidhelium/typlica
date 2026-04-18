@@ -1,0 +1,6 @@
+{
+  "title": "Hello, World!",
+  "description": "Write your first Typst document",
+  "instructions": "Write Typst code so the output is bold \"Hello, World!\" text.\n\nHint: In Typst, use `*text*` to make text bold.",
+  "hint": "Try typing *Hello, World!*"
+}

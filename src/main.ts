@@ -1,22 +1,19 @@
 import './style.css';
 import { initCompiler, renderToCanvas } from './compiler';
-import { exercises, Exercise, getSavedCode, saveCode, markCompleted, isCompleted, getCompletedCount, localizeExercise } from './exercises';
+import { Exercise, getExercisesForLocale, getSavedCode, saveCode, markCompleted, isCompleted, getCompletedCount } from './exercises';
 import { createEditor, setEditorContent } from './editor';
 import { computeDiff } from './diff';
 import { t, getLocale, setLocale, type Locale } from './i18n';
 import type { EditorView } from '@codemirror/view';
 
-let currentExercise: Exercise = exercises[0];
+let exercises: Exercise[] = [];
+let currentExercise!: Exercise;
 let editorView: EditorView | null = null;
 let compileTimeout: ReturnType<typeof setTimeout> | null = null;
 let expectedCanvasCache: Map<string, HTMLCanvasElement> = new Map();
 let currentCanvasRef: HTMLCanvasElement | null = null;
 let hintVisible = false;
 let compilerReady = false;
-
-function getEx(ex: Exercise): Exercise {
-  return localizeExercise(ex, getLocale());
-}
 
 function renderApp(): void {
   const app = document.getElementById('app')!;
@@ -38,7 +35,7 @@ function renderApp(): void {
       ${exercises.map((ex, i) => `
         <button class="nav-btn ${ex.id === currentExercise.id ? 'active' : ''} ${isCompleted(ex.id) ? 'completed' : ''}"
                 data-index="${i}">
-          ${isCompleted(ex.id) ? '<span class="check">✓</span>' : ''}${i + 1}. ${getEx(ex).title}
+          ${isCompleted(ex.id) ? '<span class="check">✓</span>' : ''}${i + 1}. ${ex.title}
         </button>
       `).join('')}
     </nav>
@@ -46,12 +43,12 @@ function renderApp(): void {
     <div class="main-container" id="main-container">
       <div class="left-panel">
         <div class="exercise-info">
-          <div class="exercise-title" id="exercise-title">${getEx(currentExercise).title}</div>
-          <div class="exercise-instructions" id="exercise-instructions">${formatInstructions(getEx(currentExercise).instructions)}</div>
+          <div class="exercise-title" id="exercise-title">${currentExercise.title}</div>
+          <div class="exercise-instructions" id="exercise-instructions">${formatInstructions(currentExercise.instructions)}</div>
         </div>
         <div class="editor-container" id="editor-container"></div>
         <div class="hint-panel ${hintVisible ? 'visible' : ''}" id="hint-panel">
-          💡 ${getEx(currentExercise).hint}
+          💡 ${currentExercise.hint}
         </div>
         <div class="editor-actions">
           <button class="btn btn-primary" id="btn-check">${t('btnCheck')}</button>
@@ -123,6 +120,11 @@ function setupEventListeners(): void {
   document.getElementById('btn-lang')!.addEventListener('click', () => {
     const next: Locale = getLocale() === 'zh-CN' ? 'en' : 'zh-CN';
     setLocale(next);
+    exercises = getExercisesForLocale(next);
+    currentExercise = exercises[0];
+    currentCanvasRef = null;
+    expectedCanvasCache.clear();
+    hintVisible = false;
     editorView?.destroy();
     renderApp();
     if (compilerReady) {
@@ -168,9 +170,9 @@ function switchExercise(exercise: Exercise): void {
   });
 
   // Update exercise info
-  document.getElementById('exercise-title')!.textContent = getEx(exercise).title;
-  document.getElementById('exercise-instructions')!.innerHTML = formatInstructions(getEx(exercise).instructions);
-  document.getElementById('hint-panel')!.textContent = '💡 ' + getEx(exercise).hint;
+  document.getElementById('exercise-title')!.textContent = exercise.title;
+  document.getElementById('exercise-instructions')!.innerHTML = formatInstructions(exercise.instructions);
+  document.getElementById('hint-panel')!.textContent = '💡 ' + exercise.hint;
   document.getElementById('hint-panel')!.classList.remove('visible');
 
   // Update editor
@@ -327,6 +329,8 @@ function escapeHtml(str: string): string {
 
 // Bootstrap
 async function init(): Promise<void> {
+  exercises = getExercisesForLocale(getLocale());
+  currentExercise = exercises[0];
   renderApp();
 
   try {

@@ -1,0 +1,6 @@
+{
+  "title": "标题层级",
+  "description": "创建不同级别的标题",
+  "instructions": "创建一个包含不同级别标题的文档：\n\n1. 一级标题 \"Introduction\"\n2. 二级标题 \"Background\"\n3. 在二级标题下写一行正文 \"Typst is a new typesetting system.\"\n4. 二级标题 \"Goals\"",
+  "hint": "= 是一级标题，== 是二级标题，=== 是三级标题。标题后面需要一个空格。"
+}

@@ -1,0 +1,6 @@
+{
+  "title": "列表",
+  "description": "创建有序和无序列表",
+  "instructions": "创建以下列表结构：\n\n一个无序列表包含：\n- Apples\n- Bananas\n- Cherries\n\n然后一个有序列表包含：\n1. First\n2. Second\n3. Third",
+  "hint": "无序列表用 - 开头，有序列表用 + 开头。每项之间需要换行。"
+}

@@ -1,0 +1,6 @@
+{
+  "title": "Headings",
+  "description": "Create headings at different levels",
+  "instructions": "Create a document with headings at different levels:\n\n1. Level-1 heading \"Introduction\"\n2. Level-2 heading \"Background\"\n3. Under the level-2 heading, write a line \"Typst is a new typesetting system.\"\n4. Level-2 heading \"Goals\"",
+  "hint": "= is level-1, == is level-2, === is level-3. A space is required after the heading marker."
+}

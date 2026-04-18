@@ -1,0 +1,6 @@
+{
+  "title": "Text Styling",
+  "description": "Learn bold, italic, and other text styles",
+  "instructions": "Use Typst text styling syntax to produce the following output:\n\n1. First line: write \"Typst\" in bold\n2. Second line: write \"is awesome\" in italic\n3. Third line: write \"really\" in both bold and italic",
+  "hint": "Use *...* for bold and _..._ for italic. You can nest them for both effects."
+}
