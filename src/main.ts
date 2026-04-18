@@ -37,7 +37,7 @@ function renderApp(): void {
       `).join('')}
     </nav>
 
-    <div class="main-container">
+    <div class="main-container" id="main-container">
       <div class="left-panel">
         <div class="exercise-info">
           <div class="exercise-title" id="exercise-title">${currentExercise.title}</div>
@@ -56,7 +56,12 @@ function renderApp(): void {
       </div>
 
       <div class="right-panel">
-        <div class="preview-sections" id="preview-sections">
+        <div class="preview-tab-bar" id="preview-tab-bar">
+          <button class="preview-tab-btn active" data-tab="current">当前结果</button>
+          <button class="preview-tab-btn" data-tab="expected">预期结果</button>
+          <button class="preview-tab-btn" data-tab="diff">差异对比</button>
+        </div>
+        <div class="preview-sections" id="preview-sections" data-tab="current">
           <div class="preview-section" id="preview-current">
             <div class="preview-label">当前结果</div>
             <div class="preview-content" id="current-content">
@@ -84,6 +89,8 @@ function renderApp(): void {
         </div>
       </div>
     </div>
+
+
   `;
 
   setupEventListeners();
@@ -106,6 +113,19 @@ function setupEventListeners(): void {
   document.getElementById('btn-reset')!.addEventListener('click', resetCode);
   document.getElementById('btn-answer')!.addEventListener('click', showAnswer);
   document.getElementById('btn-hint')!.addEventListener('click', toggleHint);
+
+  document.getElementById('preview-tab-bar')!.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('.preview-tab-btn') as HTMLElement | null;
+    if (!btn) return;
+    switchMobileTab(btn.dataset.tab!);
+  });
+}
+
+function switchMobileTab(tab: string): void {
+  (document.getElementById('preview-sections')! as HTMLElement).dataset.tab = tab;
+  document.querySelectorAll('.preview-tab-btn').forEach((btn) => {
+    btn.classList.toggle('active', (btn as HTMLElement).dataset.tab === tab);
+  });
 }
 
 function setupEditor(): void {
@@ -207,6 +227,9 @@ function autoRunDiff(): void {
     diffContainer.appendChild(diff.diffCanvas);
 
     updateMatchStatus(diff.matchPercentage);
+
+    // On mobile, auto-switch to diff tab once diff is ready
+    if (window.matchMedia('(max-width: 768px)').matches) switchMobileTab('diff');
 
     if (diff.matchPercentage >= 99.5) {
       markCompleted(currentExercise.id);
