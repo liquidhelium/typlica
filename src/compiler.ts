@@ -22,7 +22,7 @@ export async function initCompiler(): Promise<void> {
     el.addEventListener('error', () => reject(new Error('Failed to load typst.ts')));
   });
 
-  $typst.use(TypstSnippet.preloadFontAssets({ assets: ['cjk'] }));
+  $typst.use(TypstSnippet.preloadFontAssets({ assets: ['text', 'cjk'] }));
   $typst.setCompilerInitOptions({ getModule: () => COMPILER_WASM });
   $typst.setRendererInitOptions({ getModule: () => RENDERER_WASM });
 
