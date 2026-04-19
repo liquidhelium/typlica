@@ -1,6 +1,6 @@
 {
   "title": "Advanced Math",
-  "description": "Learn to create matrices, summations, integrals, and roots.",
+  "description": "Learn to create matrices, summations, and integrals.",
   "instructions": "Create a 2x2 matrix with elements 1, 2 in the first row and 3, 4 in the second row. Below it, write a summation from i=1 to n of i. Then, write a definite integral from 0 to 1 of x.",
   "hint": "Use the mat() function for matrices. Use sum_(i=1)^n i for summation, int_0^1 x dif x for integrals."
 }
