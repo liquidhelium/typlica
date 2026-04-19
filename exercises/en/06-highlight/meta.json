@@ -1,0 +1,6 @@
+{
+  "title": "Using Highlight",
+  "description": "Highlight a piece of content",
+  "instructions": "Highlight a piece of content with default color (yellow). Highlight a piece of content with orange. Highlight a piece of content with cyan.",
+  "hint": "#highlight[highlight a piece of content], you can use #highlight(fill:xxx) to specify the color. The color can be a color name, a hex color code, or an RGB color value. The RGB color value for this exercise can be found in the comments."
+}
