@@ -2,6 +2,8 @@
 
 An interactive Typst exercise platform — bringing a [Rustlings](https://github.com/rust-lang/rustlings)-style learning experience to the [Typst](https://typst.app/) world.
 
+**Try it live: [liquidhelium.github.io/typlica](https://liquidhelium.github.io/typlica/)**
+
 [中文文档](README-zh_cn.md)
 
 ## Features

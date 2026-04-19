@@ -2,6 +2,8 @@
 
 Typst 交互式练习平台 —— 将类似 [Rustlings](https://github.com/rust-lang/rustlings) 的练习体验带到 [Typst](https://typst.app/) 的世界中。
 
+**在线体验：[liquidhelium.github.io/typlica](https://liquidhelium.github.io/typlica/)**
+
 [English](README.md)
 
 ## 特点
