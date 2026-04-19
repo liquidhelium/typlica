@@ -32,36 +32,12 @@ Output is placed in the `dist/` directory.
 
 ## Adding Exercises
 
-1. Create a new directory under `exercises/`, e.g. `exercises/06-tables/`
-2. Add an `answer.typ` file (the reference solution)
-3. Add a `template.typ` file (the starting template shown to users)
-4. Register the exercise metadata in `src/exercises.ts`
+Exercises are auto-discovered at build time — no TypeScript changes needed.
 
-## Project Structure
-
-```
-typlica/
-├── .github/workflows/deploy.yml   # GitHub Pages deployment
-├── exercises/                      # Exercise files
-│   ├── preamble.typ               # Shared preamble
-│   ├── 01-hello-world/
-│   │   ├── answer.typ
-│   │   └── template.typ
-│   ├── 02-text-styling/
-│   ├── 03-headings/
-│   ├── 04-lists/
-│   └── 05-math/
-├── src/
-│   ├── main.ts                    # App entry point
-│   ├── compiler.ts                # typst.ts rendering wrapper
-│   ├── editor.ts                  # CodeMirror editor setup
-│   ├── exercises.ts               # Exercise data & progress management
-│   ├── diff.ts                    # Pixel-level image diff
-│   ├── i18n.ts                    # Internationalization (zh-CN / en)
-│   ├── typst-lang.ts             # Typst syntax highlighting
-│   └── style.css                  # Styles
-└── index.html
-```
+1. Create a new directory under `exercises/{locale}/`, e.g. `exercises/en/07-tables/`
+2. Add a `meta.json` file with `title`, `description`, `instructions`, and `hint` fields
+3. Add an `answer.typ` file (the reference solution)
+4. Add a `template.typ` file (the starting template shown to users)
 
 ## Tech Stack
 

@@ -32,35 +32,12 @@ npm run build
 
 ## 添加练习
 
-1. 在 `exercises/` 下创建新目录，如 `exercises/06-tables/`
-2. 添加 `answer.typ` 文件（答案代码）
-3. 在 `src/exercises.ts` 中添加练习元数据
+练习在构建时自动发现，无需修改任何 TypeScript 文件。
 
-## 项目结构
-
-```
-typlica/
-├── .github/workflows/deploy.yml   # GitHub Pages 部署
-├── exercises/                      # 练习题目
-│   ├── preamble.typ               # 共用前置代码
-│   ├── 01-hello-world/answer.typ
-│   ├── 02-text-styling/answer.typ
-│   ├── 03-headings/answer.typ
-│   ├── 04-lists/answer.typ
-│   └── 05-math/answer.typ
-├── scripts/
-│   └── generate-references.mjs    # 参考图片生成脚本
-├── src/
-│   ├── main.ts                    # 应用主入口
-│   ├── compiler.ts                # typst.ts 编译封装
-│   ├── editor.ts                  # CodeMirror 编辑器
-│   ├── exercises.ts               # 练习数据与进度管理
-│   ├── diff.ts                    # 图像差异对比
-│   ├── i18n.ts                    # 国际化（中文/英文）
-│   ├── typst-lang.ts             # Typst 语法高亮
-│   └── style.css                  # 样式
-└── index.html
-```
+1. 在 `exercises/{语言}/` 下创建新目录，如 `exercises/zh-CN/07-tables/`
+2. 添加 `meta.json` 文件，包含 `title`、`description`、`instructions`、`hint` 字段
+3. 添加 `answer.typ` 文件（参考答案）
+4. 添加 `template.typ` 文件（展示给用户的起始模板）
 
 ## 技术栈
 
