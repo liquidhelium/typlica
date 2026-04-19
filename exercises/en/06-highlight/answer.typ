@@ -1,5 +1,5 @@
 // Highlight content
-// For cyan rgb value use rgb("#6ad3e663")
+// For the cyan RGB value, use rgb("#6ad3e663")
 
 #highlight[Default highlight]
 
