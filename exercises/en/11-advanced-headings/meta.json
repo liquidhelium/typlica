@@ -1,0 +1,6 @@
+{
+  "title": "Advanced Headings",
+  "description": "Learn to use numbered headings.",
+  "instructions": "Set heading numbering to '1.1'. Then create a level 1 heading named 'Introduction' and a level 2 heading named 'Background'.",
+  "hint": "Use #set heading(numbering: \"1.1\") before your headings."
+}

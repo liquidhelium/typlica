@@ -1,0 +1,6 @@
+{
+  "title": "Spacing",
+  "description": "Learn to use v and h for horizontal and vertical spacing.",
+  "instructions": "Add 2em of vertical spacing between the two paragraphs. Add 1cm of horizontal spacing between the two words.",
+  "hint": "Use #v(2em) for vertical space and #h(1cm) for horizontal space."
+}

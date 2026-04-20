@@ -1,0 +1,6 @@
+{
+  "title": "Box and Block",
+  "description": "Learn to use box and block layout elements.",
+  "instructions": "Create a box with a red border and some text inside. Create a block with a blue background and some text inside.",
+  "hint": "Use #box(stroke: red)[text] and #block(fill: blue)[text]."
+}

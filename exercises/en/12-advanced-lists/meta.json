@@ -1,0 +1,6 @@
+{
+  "title": "Advanced Lists",
+  "description": "Learn to create unordered lists, nested ordered lists, and change their numbering.",
+  "instructions": "Create a main unordered list item 'Apple' containing a nested unordered list with 'Red Apple' and 'Green Apple'. Then set the enum numbering to '1.a)'. Create an ordered list with the first item 'Fruits' containing a nested ordered list with items 'Citrus' and 'Berry', and a second main item 'Vegetables'.",
+  "hint": "Use `-` for unordered lists. Use `#set enum(numbering: \"1.a)\")`. Use two spaces (or a tab) to indent nested list items."
+}

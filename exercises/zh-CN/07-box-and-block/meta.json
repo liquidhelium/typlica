@@ -1,0 +1,6 @@
+{
+  "title": "盒子与块",
+  "description": "学习使用 box 和 block 布局元素。",
+  "instructions": "创建一个带有红色边框的 box，里面包含一些文本。创建一个带有蓝色背景的 block，里面包含一些文本。",
+  "hint": "使用 #box(stroke: xxx)[文本] 和 #block(fill: xxx)[文本]。"
+}

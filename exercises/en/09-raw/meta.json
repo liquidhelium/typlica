@@ -1,0 +1,6 @@
+{
+  "title": "Raw Text",
+  "description": "Learn how to format raw text or code.",
+  "instructions": "Create an inline raw text for `print(\"Hello\")`. Create a block of raw text for a rust function `fn main() {}`.",
+  "hint": "Use single backticks for inline raw text and triple backticks for a block of raw text."
+}

@@ -1,0 +1,6 @@
+{
+  "title": "Advanced Text Styling",
+  "description": "Learn advanced text styling functions.",
+  "instructions": "Apply smallcaps to the word 'Smallcaps'. Apply a strikethrough to the word 'Old'. Apply an underline to the word 'New'.",
+  "hint": "Use #smallcaps[text], #strike[text], and #underline[text]."
+}
